@@ -6,16 +6,38 @@ export class App extends Component {
     good: 0,
     neutral: 0,
     bad: 0,
+    total: 0,
+    percentage: 0,
   };
 
   addGoodFeed = () => {
-    this.setState({ good: this.state.good + 1 });
+    this.setState({
+      good: this.state.good + 1,
+    });
+    this.countTotalFeedback();
+    this.countPositiveFeedbackPercentage();
   };
   addNeutralFeed = () => {
-    this.setState({ neutral: this.state.neutral + 1 });
+    this.setState({
+      neutral: this.state.neutral + 1,
+    });
+    this.countTotalFeedback();
+    this.countPositiveFeedbackPercentage();
   };
   addBadFeed = () => {
-    this.setState({ bad: this.state.bad + 1 });
+    this.setState({
+      bad: this.state.bad + 1,
+    });
+    this.countTotalFeedback();
+    this.countPositiveFeedbackPercentage();
+  };
+  countTotalFeedback = () => {
+    this.setState(prev => ({ total: prev.total + 1 }));
+  };
+  countPositiveFeedbackPercentage = () => {
+    this.setState(prev => ({
+      percentage: (prev.good / prev.total) * 100,
+    }));
   };
 
   render() {
@@ -40,6 +62,12 @@ export class App extends Component {
             Neutral: {this.state.neutral}
           </li>
           <li className={css.statistics_list_item}>Bad: {this.state.bad}</li>
+          <li className={css.statistics_list_item}>
+            Total: {this.state.total}
+          </li>
+          <li className={css.statistics_list_item}>
+            PositiveFeedback: {this.state.percentage}%
+          </li>
         </ul>
       </div>
     );
