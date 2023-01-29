@@ -3,7 +3,7 @@ import { Section } from 'components/Section/Section';
 import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
 import { Statistics } from 'components/Statistics/Statistics';
 import { Notification } from 'components/Notification/Notification';
-import css from '../App/App.module.css';
+import '../App/App.module.css';
 
 export class App extends Component {
   state = {
@@ -15,17 +15,15 @@ export class App extends Component {
   };
 
   addFeed = event => {
-    {
-      switch (event.target.textContent.toLowerCase()) {
-        case 'good':
-          this.addGoodFeed();
-          break;
-        case 'neutral':
-          this.addNeutralFeed();
-          break;
-        default:
-          this.addBadFeed();
-      }
+    switch (event.target.textContent.toLowerCase()) {
+      case 'good':
+        this.addGoodFeed();
+        break;
+      case 'neutral':
+        this.addNeutralFeed();
+        break;
+      default:
+        this.addBadFeed();
     }
   };
   addGoodFeed = () => {
