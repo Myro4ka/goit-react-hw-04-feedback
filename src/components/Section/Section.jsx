@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import css from '../App/App.module.css';
 
 export const Section = ({ children, title }) => {
@@ -7,4 +8,8 @@ export const Section = ({ children, title }) => {
       {children}
     </section>
   );
+};
+
+Section.propTypes = {
+  title: PropTypes.string,
 };

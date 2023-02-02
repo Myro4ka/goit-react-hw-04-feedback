@@ -14,42 +14,25 @@ export class App extends Component {
     percentage: 0,
   };
 
-  addFeed = event => {
-    switch (event.target.textContent.toLowerCase()) {
-      case 'good':
-        this.addGoodFeed();
-        break;
-      case 'neutral':
-        this.addNeutralFeed();
-        break;
-      default:
-        this.addBadFeed();
+  addFeedback = event => {
+    if (event.target === event.currentTarget) {
+      const activeBtn = event.currentTarget.textContent;
+      this.changeFeedbackOptions(activeBtn);
     }
   };
-  addGoodFeed = () => {
+
+  changeFeedbackOptions = feedback => {
     this.setState({
-      good: this.state.good + 1,
+      [feedback]: this.state[feedback] + 1,
     });
     this.countTotalFeedback();
     this.countPositiveFeedbackPercentage();
   };
-  addNeutralFeed = () => {
-    this.setState({
-      neutral: this.state.neutral + 1,
-    });
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
-  };
-  addBadFeed = () => {
-    this.setState({
-      bad: this.state.bad + 1,
-    });
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
-  };
+
   countTotalFeedback = () => {
     this.setState(prev => ({ total: prev.total + 1 }));
   };
+
   countPositiveFeedbackPercentage = () => {
     this.setState(prev => ({
       percentage: Math.round((prev.good / prev.total) * 100 * 100) / 100,
@@ -57,19 +40,26 @@ export class App extends Component {
   };
 
   render() {
+    const optionsForButtons = Object.keys(this.state).filter(
+      option => option === 'good' || option === 'neutral' || option === 'bad'
+    );
+    const { good, neutral, bad, total, percentage } = this.state;
     return (
       <div>
         <Section title="Please leave feedback">
-          <FeedbackOptions onLeaveFeedback={this.addFeed} />
+          <FeedbackOptions
+            options={optionsForButtons}
+            onLeaveFeedback={this.addFeedback}
+          />
         </Section>
         <Section title="Statistics">
-          {this.state.total !== 0 ? (
+          {total !== 0 ? (
             <Statistics
-              good={this.state.good}
-              neutral={this.state.neutral}
-              bad={this.state.bad}
-              total={this.state.total}
-              positivePercentage={this.state.percentage}
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positivePercentage={percentage}
             />
           ) : (
             <Notification title="There is no feedback" />
