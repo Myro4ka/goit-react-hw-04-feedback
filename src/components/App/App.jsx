@@ -52,7 +52,7 @@ export class App extends Component {
   };
   countPositiveFeedbackPercentage = () => {
     this.setState(prev => ({
-      percentage: (prev.good / prev.total) * 100,
+      percentage: Math.round((prev.good / prev.total) * 100 * 100) / 100,
     }));
   };
 
